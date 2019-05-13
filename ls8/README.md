@@ -61,6 +61,10 @@ but you'll have to implement those three above instructions first!
 ## Step 0: IMPORTANT: inventory what is here!
 
 * Make a list of files here.
+  - CPU.c (loads the binary bytes from a .ls8 file into a RAM array)
+  - CPU.h (hold all the informationa about the CPU)
+  - LS8.c (main)
+  - EXAMPLES folder
 * Write a short 3-10-word description of what each file does.
 * Note what has been implemented, and what hasn't.
 * Read this whole file.
