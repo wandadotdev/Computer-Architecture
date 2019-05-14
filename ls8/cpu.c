@@ -1,4 +1,6 @@
 #include "cpu.h"
+#include <string.h>
+#include <stdio.h>
 
 #define DATA_LEN 6
 
@@ -61,13 +63,18 @@ void cpu_run(struct cpu *cpu)
 /**
  * Initialize a CPU struct
  */
+/* The `cpu_init()` function takes a pointer to a `struct cpu` and initializes it as necessary. At first, the PC, registers, and RAM should be cleared to zero.
+(`memset()` might help you clear registers and RAM.) */
 void cpu_init(struct cpu *cpu)
 {
   // TODO: Initialize the PC and other special registers
+  cpu->PC = 0;
+  memset(cpu->registers, 0, 8);
+  memset(cpu->ram, 0, 256);
+
 }
 
-/* In `cpu.c`, add functions `cpu_ram_read()` and `cpu_ram_write()` that access the
-RAM inside the `struct cpu`. */
+/* In `cpu.c`, add functions `cpu_ram_read()` and `cpu_ram_write()` that access theRAM inside the `struct cpu`. */
 
 unsigned char cpu_ram_read(struct cpu *cpu, unsigned char address) 
 //read needs address in ram
