@@ -44,14 +44,14 @@ void alu(struct cpu *cpu, enum alu_op op, unsigned char regA, unsigned char regB
 
 /* In `cpu.c`, add functions `cpu_ram_read()` and `cpu_ram_write()` that access theRAM inside the `struct cpu`. */
 
-unsigned char cpu_ram_read(struct cpu *cpu, unsigned char address) 
 //read needs address in ram
+unsigned char cpu_ram_read(struct cpu *cpu, unsigned char address) 
 {
   return cpu->ram[address];
 }
 
-unsigned char cpu_ram_write(struct cpu *cpu, unsigned char address, unsigned char value)
 //write needs address in ram and the value at to write
+unsigned char cpu_ram_write(struct cpu *cpu, unsigned char address, unsigned char value)
 {
   return cpu->ram[address] = value;
   //need to write
