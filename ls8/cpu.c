@@ -54,12 +54,33 @@ void cpu_run(struct cpu *cpu)
     // 1. Get the value of the current instruction (in address PC).
     unsigned char IR = cpu_ram_read(cpu, cpu->PC); //mem address stored in PC
     // 2. Figure out how many operands this next instruction requires
+    unsigned char num_operands = IR >> 6;
+    // 3. Get the appropriate value(s) of the operands following this instruction
     unsigned char operandA = cpu_ram_read(cpu, cpu->PC + 1);
     unsigned char operandB = cpu_ram_read(cpu, cpu->PC + 2);
-    // 3. Get the appropriate value(s) of the operands following this instruction
     // 4. switch() over it to decide on a course of action.
+    switch(IR)
+    {
     // 5. Do whatever the instruction should do according to the spec.
+      case LDI:
+        // Set the value of a register to an integer.
+        cpu->registers[operandA] = operandB;
+        break;
+
+      case PRN:
+        printf("%d\n", cpu->registers[operandA]);
+        break;
+
+      case HLT:
+        running = 0;
+        break;
+
+      default:
+        printf("Error!");
+        break;  
+    }
     // 6. Move the PC to the next instruction.
+    cpu->PC += (num_operands + 1);
   }
 }
 
