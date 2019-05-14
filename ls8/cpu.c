@@ -1,5 +1,6 @@
 #include "cpu.h"
 #include <string.h>
+#include <stdlib.h> //exit
 #include <stdio.h>
 
 #define DATA_LEN 6
@@ -7,25 +8,43 @@
 /**
  * Load the binary bytes from a .ls8 source file into a RAM array
  */
-void cpu_load(struct cpu *cpu)
+void cpu_load(struct cpu *cpu, int argc, char *argv[])
 {
-  char data[DATA_LEN] = {
-    // From print8.ls8
-    0b10000010, // LDI R0,8
-    0b00000000,
-    0b00001000,
-    0b01000111, // PRN R0
-    0b00000000,
-    0b00000001  // HLT
-  };
+  // TODO: Replace this with something less hard-coded
+  // https://www.tutorialspoint.com/c_standard_library/c_function_strtoul.htm
 
+  FILE *fp = fopen(argv[1], "r");
   int address = 0;
-
-  for (int i = 0; i < DATA_LEN; i++) {
-    cpu->ram[address++] = data[i];
+  
+  if (argc != 2)
+  {
+    fprintf(stderr, "usage: ls8 filename.ls8\n");
+    exit(1);
   }
 
-  // TODO: Replace this with something less hard-coded
+  char line[1028];
+
+  if(fp == NULL)
+  {
+    fprintf(stderr, "comp: error opening file \"%s\"\n", argv[1]);
+    exit(2);      
+  }
+
+  while (fgets(line, sizeof line, fp) != NULL)
+  {
+    char *endptr;
+
+    unsigned char value = strtoul(line, &endptr, 2); //converts strings to nums
+
+    if (endptr == line) {
+      continue;
+    }
+
+    cpu->ram[address++] = value;
+
+  }
+
+
 }
 
 /**
@@ -114,3 +133,18 @@ void cpu_init(struct cpu *cpu)
 
 }
 
+/*   char data[DATA_LEN] = {
+    // From print8.ls8
+    0b10000010, // LDI R0,8
+    0b00000000,
+    0b00001000,
+    0b01000111, // PRN R0
+    0b00000000,
+    0b00000001  // HLT
+  };
+
+  int address = 0;
+
+  for (int i = 0; i < DATA_LEN; i++) {
+    cpu->ram[address++] = data[i];
+  } */
