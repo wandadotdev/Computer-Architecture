@@ -52,7 +52,10 @@ void cpu_run(struct cpu *cpu)
   while (running) {
     // TODO
     // 1. Get the value of the current instruction (in address PC).
+    unsigned char IR = cpu_ram_read(cpu, cpu->PC); //mem address stored in PC
     // 2. Figure out how many operands this next instruction requires
+    unsigned char operandA = cpu_ram_read(cpu, cpu->PC + 1);
+    unsigned char operandB = cpu_ram_read(cpu, cpu->PC + 2);
     // 3. Get the appropriate value(s) of the operands following this instruction
     // 4. switch() over it to decide on a course of action.
     // 5. Do whatever the instruction should do according to the spec.
@@ -65,6 +68,7 @@ void cpu_run(struct cpu *cpu)
  */
 /* The `cpu_init()` function takes a pointer to a `struct cpu` and initializes it as necessary. At first, the PC, registers, and RAM should be cleared to zero.
 (`memset()` might help you clear registers and RAM.) */
+// https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
 void cpu_init(struct cpu *cpu)
 {
   // TODO: Initialize the PC and other special registers
