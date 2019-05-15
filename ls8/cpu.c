@@ -44,7 +44,6 @@ void cpu_load(struct cpu *cpu, int argc, char *argv[])
 
   }
 
-
 }
 
 /**
@@ -112,6 +111,20 @@ void cpu_run(struct cpu *cpu)
 
       case MUL:
         alu(cpu, ALU_MUL, operandA, operandB);
+        break;
+      
+      case PUSH:
+        cpu->registers[7]--; //decrement the stack pointer
+        cpu_ram_write(cpu, cpu->registers[7], cpu->registers[operandA]); 
+        //copy the value in the given register to address of the SP
+        break;
+
+      case POP:
+        //https://stackoverflow.com/questions/1010966/what-is-the-meaning-of-the-gcc-warning-case-label-value-exceeds-maximum-value-f/1010995
+        // error I got because I forgot to put `0b` in the POP preprocessor!
+        //copy the value from the address pointed to by `SP` to the given register. 
+        cpu->registers[operandA] = cpu_ram_read(cpu, cpu->registers[7]);
+        cpu->registers[7]++; //increment the stack pointer
         break;
 
       default:
