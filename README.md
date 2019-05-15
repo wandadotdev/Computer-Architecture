@@ -16,8 +16,8 @@
 
 ### Day 2: Add the ability to load files dynamically, get `mult.ls8` and `stack.ls8` running
 
-- [ ] Un-hardcode the machine code
-- [ ] Implement the `cpu_load` function to load an `.ls8` file given the
+- [x] Un-hardcode the machine code
+- [x] Implement the `cpu_load` function to load an `.ls8` file given the
       filename passed in as an argument
 - [ ] Implement a Multiply instruction and Print the result (run `mult8.ls8`)
 
