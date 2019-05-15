@@ -58,6 +58,9 @@ void alu(struct cpu *cpu, enum alu_op op, unsigned char regA, unsigned char regB
       break;
 
     // TODO: implement more ALU ops
+    case ALU_ADD:
+      cpu->registers[regA] = cpu->registers[regA] + cpu->registers[regB];
+      break;
   }
 }
 
@@ -125,6 +128,21 @@ void cpu_run(struct cpu *cpu)
         //copy the value from the address pointed to by `SP` to the given register. 
         cpu->registers[operandA] = cpu_ram_read(cpu, cpu->registers[7]);
         cpu->registers[7]++; //increment the stack pointer
+        break;
+      
+      case CALL: //set the pc directly
+        cpu->registers[7]--; //address of instruction after call
+        cpu_ram_write(cpu, cpu->registers[7], cpu->PC + 1);
+        cpu->PC = cpu->registers[operandA] + 1;// set pc to address
+        break;
+
+      case RET: //set the pc directly
+        cpu->PC = cpu_ram_read(cpu, cpu->registers[7]);
+        cpu->registers[7]++;
+        break;
+
+      case ADD:
+        alu(cpu, ALU_ADD, operandA, operandB);        
         break;
 
       default:
