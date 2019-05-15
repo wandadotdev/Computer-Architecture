@@ -59,7 +59,13 @@ void alu(struct cpu *cpu, enum alu_op op, unsigned char regA, unsigned char regB
 
     // TODO: implement more ALU ops
     case ALU_ADD:
+      printf("1regA: %d\n", cpu->registers[regA]);
+      printf("1regB: %d\n", cpu->registers[regB]);
+
       cpu->registers[regA] = cpu->registers[regA] + cpu->registers[regB];
+
+      printf("regA: %d\n", cpu->registers[regA]);
+      printf("regB: %d\n", cpu->registers[regB]);
       break;
   }
 }
@@ -131,18 +137,22 @@ void cpu_run(struct cpu *cpu)
         break;
       
       case CALL: //set the pc directly
-        cpu->registers[7]--; //address of instruction after call
-        cpu_ram_write(cpu, cpu->registers[7], cpu->PC + 1);
+        // cpu->registers[7]--; //address of instruction after call
+        cpu_ram_write(cpu, cpu->registers[7], cpu->PC + 2);
         cpu->PC = cpu->registers[operandA] + 1;// set pc to address
         break;
 
       case RET: //set the pc directly
         cpu->PC = cpu_ram_read(cpu, cpu->registers[7]);
-        cpu->registers[7]++;
+        // cpu->registers[7]++;
         break;
 
       case ADD:
-        alu(cpu, ALU_ADD, operandA, operandB);        
+        alu(cpu, ALU_ADD, operandA, operandB);
+
+        printf("statea: %d\n", operandA);
+        printf("stateb: %d\n", operandB);
+
         break;
 
       default:
