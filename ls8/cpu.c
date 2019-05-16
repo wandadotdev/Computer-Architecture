@@ -65,16 +65,16 @@ void alu(struct cpu *cpu, enum alu_op op, unsigned char regA, unsigned char regB
     case ALU_CMP:
       
       cpu->FL = 0;
-      printf("regA-CMP: %d\n", cpu->registers[regA]);
-      printf("regB-CMP: %d\n", cpu->registers[regB]);
-      printf("flag before : %d\n", cpu->FL);
+      // printf("regA-CMP: %d\n", cpu->registers[regA]);
+      // printf("regB-CMP: %d\n", cpu->registers[regB]);
+      // printf("flag before : %d\n", cpu->FL);
 
       if (cpu->registers[regA] == cpu->registers[regB])
       {
         cpu->FL = 1;
       }
       
-      printf("flag after: %d\n", cpu->FL);
+      // printf("flag after: %d\n", cpu->FL);
       break;
   }
 }
@@ -165,29 +165,30 @@ void cpu_run(struct cpu *cpu)
         break;
 
       case JMP:
-        printf("opA-JMP: %d\n", cpu->registers[operandA]);
+        // printf("opA-JMP: %d\n", cpu->registers[operandA]);
         cpu->PC = cpu->registers[operandA] - 2;
-        printf("opA-JMPafter: %d\n", cpu->registers[operandA]);
+        // printf("opA-JMPafter: %d\n", cpu->registers[operandA]);
         break;
 
       case JEQ:
         if (cpu->FL == 1)
         {
           cpu->PC = cpu->registers[operandA] - 2;
-          printf("opA-JEQ: %d\n", cpu->registers[operandA]);
+          // printf("opA-JEQ: %d\n", cpu->registers[operandA]);
         }
         break;
       
       case JNE:
         if (cpu->FL == 0)
         {
-          cpu->PC = cpu->registers[operandA];
-          printf("opA-JNE: %d\n", cpu->registers[operandA]);
+          cpu->PC = cpu->registers[operandA] - 2;
+          // printf("opA-JNE: %d\n", cpu->registers[operandA]);
         }
         break;
 
       default:
-        printf("Error!\n");
+        // printf("Error!\n");
+        printf("Error!: %d\n", IR);
         break;  
     }
     // 6. Move the PC to the next instruction.
