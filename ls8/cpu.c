@@ -59,13 +59,22 @@ void alu(struct cpu *cpu, enum alu_op op, unsigned char regA, unsigned char regB
 
     // TODO: implement more ALU ops
     case ALU_ADD:
-      // printf("1regA: %d\n", cpu->registers[regA]);
-      // printf("1regB: %d\n", cpu->registers[regB]);
+       cpu->registers[regA] = cpu->registers[regA] + cpu->registers[regB];
+      break;
+    
+    case ALU_CMP:
+      
+      cpu->FL = 0;
+      printf("regA-CMP: %d\n", cpu->registers[regA]);
+      printf("regB-CMP: %d\n", cpu->registers[regB]);
+      printf("flag before : %d\n", cpu->FL);
 
-      cpu->registers[regA] = cpu->registers[regA] + cpu->registers[regB];
-
-      // printf("regA: %d\n", cpu->registers[regA]);
-      // printf("regB: %d\n", cpu->registers[regB]);
+      if (cpu->registers[regA] == cpu->registers[regB])
+      {
+        cpu->FL = 1;
+      }
+      
+      printf("flag after: %d\n", cpu->FL);
       break;
   }
 }
@@ -149,6 +158,32 @@ void cpu_run(struct cpu *cpu)
 
       case ADD:
         alu(cpu, ALU_ADD, operandA, operandB);
+        break;
+
+      case CMP:
+        alu(cpu, ALU_CMP, operandA, operandB);
+        break;
+
+      case JMP:
+        printf("opA-JMP: %d\n", cpu->registers[operandA]);
+        cpu->PC = cpu->registers[operandA] - 2;
+        printf("opA-JMPafter: %d\n", cpu->registers[operandA]);
+        break;
+
+      case JEQ:
+        if (cpu->FL == 1)
+        {
+          cpu->PC = cpu->registers[operandA] - 2;
+          printf("opA-JEQ: %d\n", cpu->registers[operandA]);
+        }
+        break;
+      
+      case JNE:
+        if (cpu->FL == 0)
+        {
+          cpu->PC = cpu->registers[operandA];
+          printf("opA-JNE: %d\n", cpu->registers[operandA]);
+        }
         break;
 
       default:
