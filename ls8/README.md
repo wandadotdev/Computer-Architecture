@@ -61,6 +61,10 @@ but you'll have to implement those three above instructions first!
 ## Step 0: IMPORTANT: inventory what is here!
 
 * Make a list of files here.
+  - CPU.c (loads the binary bytes from a .ls8 file into a RAM array)
+  - CPU.h (hold all the informationa about the CPU)
+  - LS8.c (main)
+  - EXAMPLES folder
 * Write a short 3-10-word description of what each file does.
 * Note what has been implemented, and what hasn't.
 * Read this whole file.
@@ -178,7 +182,7 @@ so you can look in `argv[1]` for the name of the file to load.
 > Bonus: check to make sure the user has put a command line argument where you
 > expect, and print an error and exit if they didn't.
 
-In `load_cpu()`, you will now want to use those command line arguments to open a file, read in its contents line by line, and save appropriate data into RAM. 
+In `cpu_load()`, you will now want to use those command line arguments to open a file, read in its contents line by line, and save appropriate data into RAM. 
 
 As you process lines from the file, you should be on the lookout for blank lines
 (ignore them), and you should ignore everything after a `#`, since that's a
