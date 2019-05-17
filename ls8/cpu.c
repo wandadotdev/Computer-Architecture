@@ -187,7 +187,6 @@ void cpu_run(struct cpu *cpu)
         break;
 
       default:
-        // printf("Error!\n");
         printf("Error!: %d\n", IR);
         break;  
     }
